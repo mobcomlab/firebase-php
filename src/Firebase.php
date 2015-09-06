@@ -197,8 +197,8 @@ class Firebase implements FirebaseMethods
             return $this->normalizer->normalize($response);
         }
 
-        //default responsen is decoded json
-        return $response->json();
+        //default response is decoded json
+        return json_decode($response->getBody());
     }
 
     /**

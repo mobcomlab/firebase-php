@@ -9,7 +9,7 @@ class AssocArrayNormalizer extends AbstractNormalizer implements NormalizerInter
 
     public function normalize(ResponseInterface $response)
     {
-        return $response->json();
+        return json_decode($response->getBody());
     }
 
 }

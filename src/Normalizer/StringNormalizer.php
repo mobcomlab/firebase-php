@@ -1,4 +1,4 @@
-<?php namespace Firebase\Normalizer;
+json_decode<?php namespace Firebase\Normalizer;
 
 
 use Psr\Http\Message\ResponseInterface;
@@ -9,7 +9,7 @@ class StringNormalizer extends AbstractNormalizer implements NormalizerInterface
 
     public function normalize(ResponseInterface $response)
     {
-        return $response->getBody();
+        return json_decode($response->getBody());
     }
 
 }
