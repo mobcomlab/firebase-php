@@ -1,4 +1,4 @@
-json_decode<?php namespace Firebase\Normalizer;
+<?php namespace Firebase\Normalizer;
 
 
 use Psr\Http\Message\ResponseInterface;
