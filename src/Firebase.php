@@ -198,7 +198,7 @@ class Firebase implements FirebaseMethods
         }
 
         //default response is decoded json
-        return json_decode($response->getBody());
+        return json_decode($response->getBody(), true);
     }
 
     /**
