@@ -1,7 +1,7 @@
 <?php namespace Firebase\Normalizer;
 
 
-use GuzzleHttp\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class SimpleArrayNormalizer extends AbstractNormalizer implements NormalizerInterface {
 
