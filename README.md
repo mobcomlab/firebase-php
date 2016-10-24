@@ -1,9 +1,11 @@
 firebase-php
 ============
 
-[![Build Status](https://travis-ci.org/eelkevdbos/firebase-php.svg?branch=master)](https://travis-ci.org/eelkevdbos/firebase-php) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/eelkevdbos/firebase-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/eelkevdbos/firebase-php/?branch=master)[![Code Coverage](https://scrutinizer-ci.com/g/eelkevdbos/firebase-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/eelkevdbos/firebase-php/?branch=master)
+[![Build Status](https://travis-ci.org/mobcomlab/firebase-php.svg?branch=master)](https://travis-ci.org/mobcomlab/firebase-php) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mobcomlab/firebase-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mobcomlab/firebase-php/?branch=master)[![Code Coverage](https://scrutinizer-ci.com/g/mobcomlab/firebase-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mobcomlab/firebase-php/?branch=master)
 
-Firebase php wrapper for REST API
+A wrapper for the Firebase Database and Authentication API.
+
+_Combiningg the best bits of [eelkevdbos/firebase-php](https://github.com/eelkevdbos/firebase-php) and [vinkas0/firebase-auth-laravel](https://github.com/vinkas0/firebase-auth-laravel)_
 
 ##Prerequisites
 - PHP >= 5.4
@@ -11,17 +13,17 @@ Firebase php wrapper for REST API
 - Composer (recommended, not required)
 
 ## Installation using composer (recommended)
-Set your projects minimum stability to `dev` in `composer.json`. This is caused by the PHP-JWT dependency. After updating the composer.json file, simply execute: `composer require eelkevdbos/firebase-php dev-master`
+Execute: `composer require mobcomlab/firebase-php dev-master`
 
-##Installation without composer
+## Installation without composer
 For a vanilla install, the following dependencies should be downloaded:
-- firebase/php-jwt [github](https://github.com/firebase/php-jwt/releases/tag/v1.0.0)
-- guzzlehttp/guzzle [github](https://github.com/guzzle/guzzle/releases/tag/5.0.3)
+- firebase/php-jwt [github](https://github.com/firebase/php-jwt/releases/tag/v4.0.0)
+- guzzlehttp/guzzle [github](https://github.com/guzzle/guzzle/releases/tag/5.3.1)
 
 Loading the dependencies can be achieved by using any [PSR-4 autoloader](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader-examples.md).
 
 ## Basic Usage
-By setting your firebase secret as token, you gain superuser access to firebase.
+By setting your Firebase secret as token, you gain superuser access to firebase.
 
 ```php
 
@@ -97,7 +99,7 @@ $pool->wait();
 ```
 
 ## Laravel integration
-Integration for Laravel 4.* up to 5.3 is supported. A service provider and a facade class are supplied. Installation is done in 2 simple steps after the general installation steps:
+Integration for Laravel 5.2+ is supported. A service provider and a facade class are supplied. Installation is done in 2 simple steps after the general installation steps:
 
 1. edit `app/config/app.php` to add the service provider and the facade class
 ```

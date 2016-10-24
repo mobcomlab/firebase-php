@@ -1,20 +1,28 @@
 {
     "name": "mobcomlab/firebase-php",
-    "description": "Firebase php wrapper for REST API",
+    "description": "Firebase wrapper for database and authentication including Laravel support",
     "license": "MIT",
-    "keywords": ["firebase", "REST", "wrapper"],
+    "keywords": ["firebase", "wrapper", "laravel", "auth", "database"],
     "authors": [{
         "name": "Antony Harfield",
         "email": "antonyharfield@gmail.com"
     }, {
         "name": "Eelke van den Bos",
         "email": "eelkevdbos@gmail.com"
+    }, {
+        "name": "Eelke van den Bos",
+        "email": "eelkevdbos@gmail.com"
+    }, {
+        "name": "Vinoth Kannan",
+        "email": "vinothkannan@vinkas.com",
+        "homepage": "https://github.com/vinothkananns"
     }],
     "require": {
         "php": ">=5.4",
         "firebase/php-jwt": "~4.0",
         "guzzlehttp/guzzle": "5.*",
-        "illuminate/support": ">=5.0"
+        "illuminate/support": "^5.2",
+        "illuminate/contracts": "^5.2"
     },
     "require-dev": {
         "mockery/mockery": "0.9.1",
