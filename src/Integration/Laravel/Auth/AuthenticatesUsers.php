@@ -21,13 +21,16 @@ trait AuthenticatesUsers
     {
         $data = $request->all();
         $validator = $this->validator($data);
-        if ($validator->fails())
+        if ($validator->fails()) {
             return $this->onFail($validator->errors()->first());
+        }
+
+        $idToken = $request->input('id_token');
 
         JWT::$leeway = 8;
         $content = file_get_contents("https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com");
         $kids = json_decode($content, true);
-        $jwt = JWT::decode($request->input('id_token'), $kids, array('RS256'));
+        $jwt = JWT::decode($idToken, $kids, array('RS256'));
         $fbpid = config('services.firebase.project_id');
         $issuer = 'https://securetoken.google.com/' . $fbpid;
         if ($jwt->aud != $fbpid)
@@ -39,10 +42,14 @@ trait AuthenticatesUsers
         else {
             $uid = $jwt->sub;
             $user = $this->firebaseLogin($uid, $request);
-            if ($user)
+            if ($user) {
+                $user->token = $idToken;
+                $user->save();
                 return response()->json(['success' => true, 'redirectTo' => $this->redirectPath()]);
-            else
+            }
+            else {
                 return $this->onFail('Error');
+            }
         }
     }
 
@@ -55,8 +62,10 @@ trait AuthenticatesUsers
     {
         $user = Auth::getProvider()->retrieveById($uid);
 
-        if (is_null($user))
+        if (is_null($user)) {
             $this->firebaseRegister($uid, $request);
+        }
+
 
         $remember = $request->has('remember') ? $request->input('remember') : false;
         return Auth::loginUsingId($uid, $remember);
