@@ -1,11 +1,11 @@
 firebase-php
 ============
 
-[![Build Status](https://travis-ci.org/mobcomlab/firebase-php.svg?branch=master)](https://travis-ci.org/mobcomlab/firebase-php) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mobcomlab/firebase-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mobcomlab/firebase-php/?branch=master)[![Code Coverage](https://scrutinizer-ci.com/g/mobcomlab/firebase-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mobcomlab/firebase-php/?branch=master)
+[![Build Status](https://travis-ci.org/mobcomlab/firebase-php.svg?branch=master)](https://travis-ci.org/mobcomlab/firebase-php) 
 
-A wrapper for the Firebase Database and Authentication API.
+A wrapper for the Firebase Database and Authentication API. _Work in progress!_
 
-_Combiningg the best bits of [eelkevdbos/firebase-php](https://github.com/eelkevdbos/firebase-php) and [vinkas0/firebase-auth-laravel](https://github.com/vinkas0/firebase-auth-laravel)_
+_Combining the best bits of [eelkevdbos/firebase-php](https://github.com/eelkevdbos/firebase-php) and [vinkas0/firebase-auth-laravel](https://github.com/vinkas0/firebase-auth-laravel)_
 
 ##Prerequisites
 - PHP >= 5.4
