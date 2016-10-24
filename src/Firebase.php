@@ -55,7 +55,7 @@ class Firebase implements FirebaseMethods
      * @param null|string $token
      * @param array $options
      */
-    public static function initialize($url, $token = null, $options = [], $normalizers = [])
+    public static function initialize($authDomain, $apiKey = null, $options = [], $normalizers = [])
     {
         //strap guzzle client if it is not set in as resolver property
         if (!isset(static::$clientResolver)) {
@@ -65,7 +65,7 @@ class Firebase implements FirebaseMethods
             });
         }
 
-        return new static(array_merge($options, ['base_url' => $url, 'token' => $token]), null, $normalizers);
+        return new static(array_merge($options, ['auth_domain' => $authDomain, 'api_key' => $apiKey]), null, $normalizers);
     }
 
     /**
@@ -246,7 +246,7 @@ class Firebase implements FirebaseMethods
      */
     protected function buildUrl($path)
     {
-        $baseUrl = $this->getOption('base_url');
+        $baseUrl = $this->getOption('auth_domain');
 
         //add trailing slash to the url if not supplied in the base_url setting nor supplied in path #6
         $url = $baseUrl . ((substr($baseUrl, -1) == '/' || substr($path, 0, 1) == '/') ? '' : '/') . $path;
@@ -272,8 +272,8 @@ class Firebase implements FirebaseMethods
             $params['orderBy'] = $data->getOrderBy();
         }
 
-        if ($token = $this->getOption('token', false)) {
-            $params['auth'] = $token;
+        if ($apiKey = $this->getOption('api_key', false)) {
+            $params['auth'] = $apiKey;
         }
 
         return $params;

@@ -96,28 +96,31 @@ $pool->wait();
 
 ```
 
-## Integration
-At the moment of writing, integration for Laravel 4.* is supported. A service provider and a facade class are supplied. Installation is done in 2 simple steps after the general installation steps:
+## Laravel integration
+Integration for Laravel 4.* up to 5.3 is supported. A service provider and a facade class are supplied. Installation is done in 2 simple steps after the general installation steps:
 
 1. edit `app/config/app.php` to add the service provider and the facade class
 ```
-    'providers' => array(
+    'providers' => [
       ...
-      'Firebase\Integration\Laravel\FirebaseServiceProvider'
-    )
+      Firebase\Integration\Laravel\FirebaseServiceProvider::class,
+    ]
     
-    'aliases' => array(
+    'aliases' => [
       ...
-      'Firebase' => 'Firebase\Integration\Laravel\Firebase'
-    )
+      'Firebase' => Firebase\Integration\Laravel\Firebase::class,
+    ]
 ```
-2. edit `app/config/services.php` (supplied by default from L4.2) to add `token` and `base_url` settings
+2. edit `app/config/services.php` to add your Firebase settings
 ```
-    'firebase' => array(
-      'base_url' => YOUR_FIREBASE_BASE_URL,
-      'token' => YOUR_FIREBASE_SECRET
-    )
+    'firebase' => [
+      'project_id' => YOUR_FIREBASE_PROJECT_ID,
+      'auth_domain' => YOUR_FIREBASE_BASE_URL,
+      'api_key' => YOUR_FIREBASE_SECRET
+    ]
 ```
+
+Now you should be able to call `Firebase::get('/node/path')` directly.
 
 ##Eventing
 
