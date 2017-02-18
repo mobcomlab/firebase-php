@@ -8,7 +8,7 @@ A wrapper for the Firebase Database and Authentication API. _Work in progress!_
 _Combining the best bits of [eelkevdbos/firebase-php](https://github.com/eelkevdbos/firebase-php) and [vinkas0/firebase-auth-laravel](https://github.com/vinkas0/firebase-auth-laravel)_
 
 ##Prerequisites
-- PHP >= 5.4
+- PHP >= 5.5
 - Firebase >= 1.1.1
 - Composer (recommended, not required)
 
