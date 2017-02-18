@@ -1,7 +1,7 @@
 <?php namespace Firebase\Normalizer;
 
 
-use GuzzleHttp\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class StringNormalizer extends AbstractNormalizer implements NormalizerInterface {
 
@@ -9,7 +9,7 @@ class StringNormalizer extends AbstractNormalizer implements NormalizerInterface
 
     public function normalize(ResponseInterface $response)
     {
-        return $response->getBody();
+        return json_decode($response->getBody());
     }
 
-} 
+}

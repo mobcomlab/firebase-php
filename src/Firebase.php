@@ -30,6 +30,12 @@ class Firebase implements FirebaseMethods
      *
      * @var array
      */
+    protected $value;
+
+    /**
+     *
+     * @var array
+     */
     protected $normalizers;
 
     /**
@@ -42,6 +48,7 @@ class Firebase implements FirebaseMethods
      * @var Closure
      */
     public static $clientResolver;
+
 
     /**
      * Default method to initialize a Firebase client, will set the ClientInterface dependency for you if not already set
@@ -85,6 +92,7 @@ class Firebase implements FirebaseMethods
     /**
      * Read data from path
      * @param $path
+     * @param null|Criteria $criteria
      * @return mixed
      */
     public function get($path = '', Criteria $criteria = null)
@@ -106,7 +114,7 @@ class Firebase implements FirebaseMethods
     }
 
     /**
-     * Update exising data in path
+     * Update existing data in path
      * @param $path
      * @param $value
      * @return mixed
@@ -144,13 +152,14 @@ class Firebase implements FirebaseMethods
      * Create a Request object
      * @param string $method
      * @param string $path
-     * @param mixed $value
+     * @param null|array $value
      * @return RequestInterface
      */
     protected function createRequest($method, $path, $value = null)
     {
         list($path, $value) = $this->evaluatePathValueArguments(array($path, $value));
-        $request = new Request($method, $this->buildUrl($path), $this->buildOptions($value));
+        $this->value = $value;
+        $request = new Request($method, $this->buildUrl($path));
         return $request;
     }
 
@@ -161,8 +170,7 @@ class Firebase implements FirebaseMethods
      */
     protected function handleRequest(RequestInterface $request)
     {
-        
-        $response = $this->client->send($request);
+        $response = $this->client->send($request, $this->buildOptions($this->value));
         return $this->normalizeResponse($response);
     }
 
@@ -177,10 +185,12 @@ class Firebase implements FirebaseMethods
 
             $this->normalizer = $this->normalizers[$normalizer];
 
-        } else if ($normalizer instanceof NormalizerInterface) {
+        } else {
+            if ($normalizer instanceof NormalizerInterface) {
 
-            $this->normalizer = $normalizer;
+                $this->normalizer = $normalizer;
 
+            }
         }
 
         return $this;
@@ -197,8 +207,8 @@ class Firebase implements FirebaseMethods
             return $this->normalizer->normalize($response);
         }
 
-        //default responsen is decoded json
-        return $response->json();
+        //default response is decoded json
+        return json_decode($response->getBody(), true);
     }
 
     /**

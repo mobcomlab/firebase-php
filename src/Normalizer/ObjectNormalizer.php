@@ -1,6 +1,7 @@
 <?php namespace Firebase\Normalizer;
 
-use GuzzleHttp\Message\ResponseInterface;
+
+use Psr\Http\Message\ResponseInterface;
 
 class ObjectNormalizer extends AbstractNormalizer implements NormalizerInterface {
 
@@ -8,7 +9,7 @@ class ObjectNormalizer extends AbstractNormalizer implements NormalizerInterface
 
     public function normalize(ResponseInterface $response)
     {
-        return $response->json(array('object' => true));
+        return json_decode($response->getBody());
     }
 
-} 
+}
