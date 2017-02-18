@@ -4,8 +4,10 @@ use Closure;
 use Firebase\Normalizer\NormalizerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+
 
 class Firebase implements FirebaseMethods
 {
@@ -148,7 +150,8 @@ class Firebase implements FirebaseMethods
     protected function createRequest($method, $path, $value = null)
     {
         list($path, $value) = $this->evaluatePathValueArguments(array($path, $value));
-        return $this->client->createRequest($method, $this->buildUrl($path), $this->buildOptions($value));
+        $request = new Request($method, $this->buildUrl($path), $this->buildOptions($value));
+        return $request;
     }
 
     /**
