@@ -1,7 +1,6 @@
 <?php namespace Firebase;
 
 use Closure;
-use Firebase\Event\RequestsBatchedEvent;
 use Firebase\Normalizer\NormalizerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -31,12 +30,6 @@ class Firebase implements FirebaseMethods
      * @var array
      */
     protected $normalizers;
-
-    /**
-     * Request array for batching
-     * @var array
-     */
-    protected $requests = array();
 
     /**
      *
@@ -160,17 +153,15 @@ class Firebase implements FirebaseMethods
     }
 
     /**
-     * Stores requests when batching, sends request
+     * Sends request
      * @param RequestInterface $request
      * @return mixed
      */
     protected function handleRequest(RequestInterface $request)
     {
-        if (!$this->getOption('batch', false)) {
-            $response = $this->client->send($request);
-            return $this->normalizeResponse($response);
-        }
-        $this->requests[] = $request;
+        
+        $response = $this->client->send($request);
+        return $this->normalizeResponse($response);
     }
 
     /**
@@ -297,26 +288,6 @@ class Firebase implements FirebaseMethods
         }
 
         return $options;
-    }
-
-
-    public function batch($callable)
-    {
-        //enable batching in the config
-        $this->setOption('batch', true);
-
-        //gather requests
-        call_user_func_array($callable, array($this));
-
-        $requests = $this->requests;
-
-        $emitter = $this->client->getEmitter();
-        $emitter->emit('requests.batched', new RequestsBatchedEvent($requests));
-
-        //reset the requests for the next batch
-        $this->requests = [];
-
-        return $requests;
     }
 
     /**

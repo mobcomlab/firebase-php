@@ -25,11 +25,6 @@ class FirebaseTest extends PHPUnit_Framework_TestCase
     protected $request;
 
     /**
-     * @var GuzzleHttp\Event\EmitterInterface
-     */
-    protected $emitter;
-
-    /**
      * @var GuzzleHttp\Message\ResponseInterface
      */
     protected $response;
@@ -46,7 +41,6 @@ class FirebaseTest extends PHPUnit_Framework_TestCase
         $this->token = 'aabbcc';
         $this->request = Mockery::mock('GuzzleHttp\Message\RequestInterface');
         $this->response = Mockery::mock('GuzzleHttp\Message\ResponseInterface')->shouldIgnoreMissing();
-        $this->emitter = Mockery::mock('GuzzleHttp\Event\EmitterInterface')->shouldIgnoreMissing();
         $this->client = Mockery::mock('GuzzleHttp\ClientInterface');
 
         $this->firebaseConfig = array(
@@ -140,46 +134,6 @@ class FirebaseTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->callProtected($this->firebase, 'normalizeResponse', array($this->response)), $this->response);
     }
 
-    public function testBatchRequests()
-    {
-        $this->firebase->getClient()
-            ->shouldReceive('createRequest')
-            ->twice()
-            ->andReturn($this->request);
-
-        $this->firebase->getClient()
-            ->shouldReceive('getEmitter')
-            ->once()
-            ->andReturn($this->emitter);
-
-        $requests = $this->firebase->batch(function ($fb) {
-            $fb->get('/test/1');
-            $fb->get('/test/2');
-        });
-
-        $this->assertCount(2, $requests);
-    }
-
-    public function testBatchEvents()
-    {
-        $this->firebase->getClient()
-            ->shouldReceive('createRequest')
-            ->once()
-            ->andReturn($this->request);
-
-        $this->firebase->getClient()
-            ->shouldReceive('getEmitter')
-            ->once()
-            ->andReturn($emitter = new \GuzzleHttp\Event\Emitter());
-
-        $emitter->on('requests.batched', function ($event) {
-            $this->assertCount(1, $event->getRequests());
-        });
-
-        $this->firebase->batch(function ($fb) {
-            $fb->get('/test/1');
-        });
-    }
 
     public function testAlternativeInjection()
     {
